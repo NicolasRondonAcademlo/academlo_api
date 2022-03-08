@@ -12,9 +12,7 @@ app = API()
 def home(request, response):
     response.text = "Hello from HOME page"
 
-@app.route("/home")
-def home(request, response):
-    response.text = "Hello from HOME_2 page"
+
 
 @app.route("/about")
 def about(request, response):
@@ -30,3 +28,12 @@ def say_hello(request, response, name):
 def sum(request, response, num1, num2):
     total = int(num1) + int(num2)
     response.text = f"{num1} + {num2} = {total}"
+
+
+@app.route("/book")
+class BookResource:
+    def get(self, req, resp):
+        resp.text = "Books Page"
+
+    def post(self, req, resp):
+        resp.text = "Create books"
