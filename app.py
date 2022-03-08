@@ -1,4 +1,3 @@
-
 # def app(environ, start_response):
 #     response_body = b"Hello World"
 #     status = "200 ok"
@@ -6,12 +5,13 @@
 #     return iter([response_body])
 
 from api import API
-app = API()
+
+app = API(templates_dir="templates")
+
 
 @app.route("/home")
 def home(request, response):
     response.text = "Hello from HOME page"
-
 
 
 @app.route("/about")
@@ -37,3 +37,16 @@ class BookResource:
 
     def post(self, req, resp):
         resp.text = "Create books"
+
+
+def handler(req, resp):
+    resp.text = "YOLO"
+
+
+app.add_route("/nuevo", handler)
+
+@app.route("/template")
+def template_handler(req, resp):
+    resp.body = app.template(
+        "index.html", context={"name": "academlo", "title": "Best framework", "author": "Nico" }
+    ).encode()
