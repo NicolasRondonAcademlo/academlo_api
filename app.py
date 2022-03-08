@@ -17,6 +17,12 @@ def about(request, response):
     response.text = "Hello from ABOUT page"
 
 
-def say_hello(request, response, persona_name):
-    response.text = f"Hello {persona_name}"
+@app.route("/hello/{name}")
+def say_hello(request, response, name):
+    response.text = f"Hello {name}"
 
+
+@app.route("/sum/{num1}/{num2}")
+def sum(request, response, num1, num2):
+    total = int(num1) + int(num2)
+    response.text = f"{num1} + {num2} = {total}"
