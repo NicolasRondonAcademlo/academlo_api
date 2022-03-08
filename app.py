@@ -17,5 +17,6 @@ def about(request, response):
     response.text = "Hello from ABOUT page"
 
 
-
+def say_hello(request, response, persona_name):
+    response.text = f"Hello {persona_name}"
 
