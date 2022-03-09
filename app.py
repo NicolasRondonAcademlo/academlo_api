@@ -70,3 +70,18 @@ def template_handler(req, resp):
     resp.body = app.template(
         "index.html", context={"name": "academlo", "title": "Best framework", "author": "Nico"}
     ).encode()
+
+
+@app.route("/template2")
+def template_handler(req, resp):
+    resp.html = app.template("index.html", context={"name": "Bumbo", "title": "Best Framework"})
+
+
+@app.route("/json")
+def json_handler(req, resp):
+    resp.json = {"name": "data", "type": "JSON"}
+
+
+@app.route("/text")
+def text_handler(req, resp):
+    resp.text = "This is a simple text"
