@@ -34,7 +34,7 @@ def home(request, response):
     response.text = "Hello from HOME page"
 
 
-@app.route("/about")
+@app.route("/about", allowed_methods = ["get"])
 def about(request, response):
     response.text = "Hello from ABOUT page"
 
@@ -63,7 +63,6 @@ def handler(req, resp):
     resp.text = "YOLO"
 
 
-app.add_route("/nuevo", handler)
 
 
 @app.route("/template")
