@@ -6,11 +6,12 @@
 
 from api import API
 
-app = API(templates_dir="templates")
+app = API(templates_dir="templates", static_dir="static")
 
 
 def custom_exception_handler(request, response, exception_cls):
     response.text = str(exception_cls)
+
 
 
 app.add_exception_handler(custom_exception_handler)
