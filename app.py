@@ -9,6 +9,13 @@ from api import API
 app = API(templates_dir="templates")
 
 
+def custom_exception_handler(request, response, exception_cls):
+    response.text = str(exception_cls)
+
+
+app.add_exception_handler(custom_exception_handler)
+
+
 @app.route("/home")
 def home(request, response):
     response.text = "Hello from HOME page"
@@ -45,8 +52,9 @@ def handler(req, resp):
 
 app.add_route("/nuevo", handler)
 
+
 @app.route("/template")
 def template_handler(req, resp):
     resp.body = app.template(
-        "index.html", context={"name": "academlo", "title": "Best framework", "author": "Nico" }
+        "index.html", context={"name": "academlo", "title": "Best framework", "author": "Nico"}
     ).encode()
