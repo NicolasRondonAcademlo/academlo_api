@@ -5,13 +5,25 @@
 #     return iter([response_body])
 
 from api import API
+from middleware import Middleware
 
 app = API(templates_dir="templates", static_dir="static")
 
 
+class SomeMiddleware(Middleware):
+    def proces_request(self, req):
+        print("Processing request", req.url)
+
+    def proces_response(self, req, resp):
+        print("Proeccsing response", req.url)
+        pass
+
+
+app.add_middleware(SomeMiddleware)
+
+
 def custom_exception_handler(request, response, exception_cls):
     response.text = str(exception_cls)
-
 
 
 app.add_exception_handler(custom_exception_handler)

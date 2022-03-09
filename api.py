@@ -4,6 +4,7 @@ from webob import Request, Response
 from parse import parse
 import inspect
 from jinja2 import Environment, FileSystemLoader
+from middleware import  Middleware
 
 
 # class API:
@@ -25,9 +26,17 @@ class API:
         )
         self.exception_handler = None
         self.whitenoise = WhiteNoise(self.wsgi_app, root=static_dir)
+        self.middleware = Middleware(self)
 
     def __call__(self, environ, start_response):
-        return self.whitenoise(environ, start_response)
+        path_info = environ["PATH_INFO"]
+        if path_info.startswith("/static"):
+            environ["PATH_INFO"] = path_info[len("/static"):]
+            return self.whitenoise(environ, start_response)
+        return self.middleware(environ, start_response)
+
+    def add_middleware(self, middleware_cls):
+        self.middleware.add_middleware(middleware_cls)
 
     def wsgi_app(self, environ, start_response):
         request = Request(environ)
